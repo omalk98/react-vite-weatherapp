@@ -1,20 +1,30 @@
 import _ from 'lodash'
 import moment from 'moment'
+import WeatherCard from '../home/WeatherCard';
 
-function fetchData(qString) {
-    fetch(`https://api.openweathermap.org/data/2.5/${qstring}&appid=${process.env.API_KEY}&units=metric&mode=xml`)
+export default async function fetchData(qString) {
+    if(qString === "" || qString=== "undefined") return;
+    let weatherCards = [];
+    await fetch(`https://api.openweathermap.org/data/2.5/${qString.split(' ').join('')}&appid=${process.env.API_KEY}&units=metric&mode=xml`)
     .then(res => {
         if(res.ok) res.text();
         else console.log('API Failed')
     })
     .then(data => {
         console.log('parsed json data');
-        _.forEach(data.list)
+        _.forEach(data.list, (city) => {
+            weatherCards.push(parseXML(city));
+        })
     })
     .catch(err => {
         console.log(err);
     });
+    return weatherCards;
+}
 
+function toFahrenheit(celsius) {
+    let fahrenheit = Number(celsius) * 9 / 5 + 32;
+    return fahrenheit.toFixed(2);
 }
 
 function parseXML(XMLdata) {
@@ -44,9 +54,4 @@ function parseXML(XMLdata) {
         }
     }
     return wt_data;
-}
-
-function toFahrenheit(celsius) {
-    let fahrenheit = Number(celsius) * 9 / 5 + 32;
-    return fahrenheit.toFixed(2);
 }

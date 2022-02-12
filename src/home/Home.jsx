@@ -1,9 +1,9 @@
-import SearchCard from './SearchCard'
+import WeatherCard from './WeatherCard'
 
 export default function Home() {
     return (
         <div>
-            <SearchCard/>
+            <WeatherCard/>
         </div>
     );
 }
