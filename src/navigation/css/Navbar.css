@@ -1,0 +1,18 @@
+/* Top Navigation Bar */
+  /* <nav> */
+.cus-navbar {
+    height: var(--nav-size);
+    background-color: var(--bg);
+    padding: 0 1rem;
+    border-bottom: var(--border);
+}
+  
+  /* <ul> */
+.cus-navbar-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+}

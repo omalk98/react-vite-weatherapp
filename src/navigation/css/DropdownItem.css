@@ -1,0 +1,30 @@
+  .cus-menu-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: background var(--speed);
+    padding: 0.5rem;
+    color: #ffffff;
+  }
+
+  .cus-menu-item:hover .cus-icon-button{
+    background-color: var(--bs-success);
+  }
+  
+  .cus-menu-item .cus-icon-button {
+    margin-right: 0.5rem;
+  }
+  
+  
+  .cus-menu-item .cus-icon-button:hover {
+    filter: none;
+  }
+  
+  .cus-menu-item:hover {
+    background-color: #525357;
+  }
+  
+  .cus-icon-right {
+    margin-left: auto;
+  }
