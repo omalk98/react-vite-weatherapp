@@ -15,8 +15,8 @@ export default function Navigation() {
   return (
     <div className="cus-nav-bar-main">
       <CusNavbar>
-        <Link to="/home" style={pushstyle}><CusNavitem icon={<Icons.Home/>}></CusNavitem></Link>
-        <Link to="/cities" style={pushstyle}><CusNavitem icon={<Icons.City/>}></CusNavitem></Link>
+        <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home/>}></CusNavitem></Link>
+        <Link to="/cities" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.City/>}></CusNavitem></Link>
         <CusNavitem icon={<Icons.Caret/>}> 
           <CusDropdownMenu/>
         </CusNavitem>

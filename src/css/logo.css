@@ -1,22 +1,38 @@
 .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-    margin-right: auto;
-    margin-left: auto;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  .Color-spin {
+    text-align: center;
   }
   
+  .Color-spin:hover {
+    animation: App-color-spin 1s linear;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .App-logo {
-      animation: App-logo-spin infinite 13s linear;
+      animation: App-logo-spin infinite 10s linear;
     }
   }
 
   @keyframes App-logo-spin {
     from {
       transform: rotate(0deg);
+      filter : hue-rotate(0deg);
     }
     to {
       transform: rotate(360deg);
+      filter : hue-rotate(360deg);
     }
   }
-  
+
+  @keyframes App-color-spin {
+    from {
+      filter : hue-rotate(0deg);
+    }
+    to {
+      filter : hue-rotate(360deg);
+    }
+  }

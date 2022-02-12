@@ -1,24 +1,18 @@
 import _ from 'lodash'
 import moment from 'moment'
-import WeatherCard from '../home/WeatherCard';
 
-export default async function fetchData(qString) {
-    if(qString === "" || qString=== "undefined") return;
+export default async function fetchData(qString, tempFormat) {
+    if (qString === "" || qString === "undefined") return;
     let weatherCards = [];
-    await fetch(`https://api.openweathermap.org/data/2.5/${qString.split(' ').join('')}&appid=${process.env.API_KEY}&units=metric&mode=xml`)
-    .then(res => {
-        if(res.ok) res.text();
-        else console.log('API Failed')
+
+    const res = await fetch(`https://pro.openweathermap.org/data/2.5/find?q=${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml`);
+    let data = await res.text();
+    data = new window.DOMParser().parseFromString(data, "text/xml");
+    
+    if (data === 'undefined' || Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
+    _.forEach(data.getElementsByTagName("item"), (city) => {
+        weatherCards.unshift(parseXML(city, tempFormat));
     })
-    .then(data => {
-        console.log('parsed json data');
-        _.forEach(data.list, (city) => {
-            weatherCards.push(parseXML(city));
-        })
-    })
-    .catch(err => {
-        console.log(err);
-    });
     return weatherCards;
 }
 
@@ -27,7 +21,26 @@ function toFahrenheit(celsius) {
     return fahrenheit.toFixed(2);
 }
 
-function parseXML(XMLdata) {
+function genBackground(condition) {
+    let bg = "https://mdbgo.io/ascensus/mdb-advanced/img/";
+
+    if (condition >= 200 && condition <= 232)
+        bg += "thunderstorm.gif";
+    else if ((condition >= 300 && condition <= 321) || (condition >= 500 && condition <= 531))
+        bg += "rain.gif";
+    else if (condition >= 600 && condition <= 622)
+        bg += "snow.gif";
+    else if (condition >= 701 && condition <= 781)
+        bg += "fog.gif";
+    else if (condition >= 801 && condition <= 804)
+        bg += "clouds.gif";
+    else
+        bg += "clear.gif";
+
+    return bg;
+}
+
+function parseXML(XMLdata, tempFormat) {
     let wt_data = {};
     wt_data = {
         background: genBackground(XMLdata.getElementsByTagName("weather")[0].getAttribute("number")),
@@ -37,10 +50,10 @@ function parseXML(XMLdata) {
         icon: `http://openweathermap.org/img/wn/${XMLdata.getElementsByTagName("weather")[0].getAttribute("icon")}@2x.png`,
         desc: XMLdata.getElementsByTagName("weather")[0].getAttribute("value"),
         temp: {
-            value: (cards.state === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("value")),
-            feel: (cards.state === "C") ? XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value")),
-            min: (cards.state === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("min") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("min")),
-            max: (cards.state === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("max") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("max"))
+            value: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("value")),
+            feel: (tempFormat === "C") ? XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value")),
+            min: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("min") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("min")),
+            max: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("max") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("max"))
         },
         pressure: XMLdata.getElementsByTagName("pressure")[0].getAttribute("value"),
         humidity: XMLdata.getElementsByTagName("humidity")[0].getAttribute("value"),

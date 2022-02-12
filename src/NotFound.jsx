@@ -1,14 +1,10 @@
 import {Alert, Container} from 'react-bootstrap'
-import * as Icons from './helpers/icons'
 
-export default function NotFound() {
+export default function NotFound(props) {
   return (
-    <Container style={{'overflow' : 'hidden'}}>
+    <Container>
       <br/><br/><br/>
-      <Alert variant='danger text-center position-static'><b><u>Error 404</u>:</b> Page Not Found.</Alert>
-      <div className='py-5' style={{'transform' : 'translateX(35%)'}}>
-      <Icons.ReactLogo className="App-logo"/>
-      </div>
+      <Alert variant='danger' className='text-center position-static'><b><u>Error 404</u>:</b> {props.text}</Alert>
     </Container>
   );
 }
