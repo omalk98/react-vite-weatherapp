@@ -1,15 +1,15 @@
 import _ from 'lodash'
 import moment from 'moment'
 
-export default async function fetchData(qString, tempFormat) {
+ export default async function fetchData(qString, tempFormat) {
     if (qString === "" || qString === "undefined") return;
     let weatherCards = [];
 
-    const res = await fetch(`https://pro.openweathermap.org/data/2.5/find?q=${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml`);
+    const res = await fetch(`https://pro.openweathermap.org/data/2.5/find?q=${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml&cnt=50`);
     let data = await res.text();
     data = new window.DOMParser().parseFromString(data, "text/xml");
     
-    if (data === 'undefined' || Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
+    if (data !== 'undefined' || Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
     _.forEach(data.getElementsByTagName("item"), (city) => {
         weatherCards.unshift(parseXML(city, tempFormat));
     })
