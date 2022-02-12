@@ -2,20 +2,28 @@ import { useState } from 'react';
 import _ from 'lodash'
 import { Container, Form, Card, Row, Col, Button } from 'react-bootstrap'
 import fetchData from '../helpers/weatherData'
-import parseComp from '../helpers/parseComponents';
+import paginateCards from '../helpers/paginate';
 import NotFound from '../NotFound'
 import * as Icons from '../helpers/icons'
 
 
 export default function SearchCard(props) {
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
 
     async function submitSearch(e) {
-        props.errorhandler(null);
+        props.setPageNo(1);
+        setLoading(true);
+        props.errorHandler(null);
         e.preventDefault();
-        let newComp = parseComp( await fetchData(search, props.tempFormat), props.tempFormat);
-        if(newComp.length === 0) props.errorhandler(<NotFound text="No Data Found"/>);
-        else props.cardHandler(newComp);
+        let newComp = await fetchData(search, props.tempFormat);
+        if(newComp === undefined) props.errorHandler(<NotFound handler={props.errorHandler} text="No String Provided."/>);
+        else if (newComp.length === 0) props.errorHandler(<NotFound handler={props.errorHandler} text="No Data Found"/>);
+        else {
+            props.setCities(newComp);
+            props.cardHandler(paginateCards(newComp, props.currentPage, props.tempFormat, props.pageHandler));
+        }
+        setLoading(false);
     }
 
     return (
@@ -30,10 +38,11 @@ export default function SearchCard(props) {
                                     <Form.Group controlId="weatherSearch">
                                         <div className='input-group position-static'>
                                             <div className="input-group-prepend position-static" >
-                                                <span className="input-group-text text-white bg-secondary" id="basic-addon1">?</span>
+                                                <span className="input-group-text text-white bg-secondary h-100" id="basic-addon1"><Icons.Details/></span>
                                             </div>
                                             <Form.Control className='bg-dark text-white position-static' type='text' placeholder='City, CC' onChange={(e) => setSearch(e.target.value)} />
-                                            <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button>
+                                            { !loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button> }
+                                            { loading && <Button disabled={true} variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button> }
                                         </div>
                                     </Form.Group>
 

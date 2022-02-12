@@ -12,6 +12,7 @@ import {BsSearch} from 'react-icons/bs'
 import {TiWeatherPartlySunny} from 'react-icons/ti'
 import {GiModernCity} from 'react-icons/gi'
 import {MdFindInPage} from 'react-icons/md'
+import {BiCommentDetail} from 'react-icons/bi'
 import ReactLogo from '../icons/logo.svg?component'
 import '../css/logo.css'
 
@@ -30,5 +31,6 @@ export {
     BsSearch as Search,
     TiWeatherPartlySunny as Weather,
     GiModernCity as CityID,
-    MdFindInPage as Find
+    MdFindInPage as Find,
+    BiCommentDetail as Details
 }

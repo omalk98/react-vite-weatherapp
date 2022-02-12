@@ -11,6 +11,12 @@
     animation: App-color-spin 1s linear;
   }
 
+  .Loading-data {
+    animation: App-logo-spin infinite 1s linear;
+    width: 20px;
+    height: 20px;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .App-logo {
       animation: App-logo-spin infinite 10s linear;
@@ -23,7 +29,7 @@
       filter : hue-rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+      transform: rotate(-360deg);
       filter : hue-rotate(360deg);
     }
   }
@@ -35,4 +41,10 @@
     to {
       filter : hue-rotate(360deg);
     }
+  }
+
+  .accordion-button {
+    background-color: var(--bs-gray-600) !important;
+    color: white !important;
+    border-radius: 1rem !important;
   }

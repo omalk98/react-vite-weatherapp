@@ -8,7 +8,7 @@ import CusDropdownMenu from "./DropdownMenu"
 import CusSearchBox from "./SearchBox"
 import * as Icons from '../helpers/icons'
 
-const pushstyle = {"marginTop": "7px"};
+const pushstyle ={} ={"marginTop": "7px"};
 
 export default function Navigation() {
 

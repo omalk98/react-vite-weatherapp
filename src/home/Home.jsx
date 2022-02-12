@@ -2,26 +2,28 @@ import { useState, useEffect } from 'react'
 import _ from 'lodash'
 import SearchCard from './SearchCard'
 import WeatherCardPage from './WeatherCardPage'
-import parseComp from '../helpers/parseComponents'
+import paginateCards from '../helpers/paginate';
 
 export default function Home(props) {
+    const [allCities, setAllCities] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const [cities, setCities] = useState(null);
     const [error, setError] = useState(false);
     const [tempFormat, setTempFormat] = useState("C");
 
-    useEffect(()=> tempControl(), [tempFormat]);
+    useEffect(()=> setCities(paginateCards(allCities, currentPage, tempFormat, pageControl)), [currentPage, allCities, tempFormat]);
 
-    function tempControl() {
-        let components = [];
-        _.forEach(cities, (ctProp) => components.unshift(ctProp.props.city));
-        if(components?.length === 0) return;
-        _.forEach(components, (ct) => {
-            ct.temp.value = convertTemp(ct.temp.value, tempFormat);
-            ct.temp.feel = convertTemp(ct.temp.feel, tempFormat);
-            ct.temp.min = convertTemp(ct.temp.min, tempFormat);
-            ct.temp.max = convertTemp(ct.temp.max, tempFormat);
-        })
-        setCities(parseComp(components, tempFormat));
+    function pageControl(e) {
+        switch (e.target.value) {
+            case "prev":
+                if (currentPage > 1) setCurrentPage(currentPage - 1);
+                break;
+            case "next":
+                setCurrentPage(currentPage + 1);
+                break;
+            default:
+                setCurrentPage(Number(e.target.value));
+        }
     }
 
     function convertTemp(temp, CF) {
@@ -35,12 +37,19 @@ export default function Home(props) {
             <SearchCard 
             tempHandler={setTempFormat} 
             tempFormat={tempFormat}
-            errorhandler={setError}
+            errorHandler={setError}
             cardHandler={setCities}
             components={cities}
+            currentPage={currentPage}
+            pageHandler={pageControl}
+            setCities={setAllCities}
+            setPageNo={setCurrentPage}
             />
 
-            <WeatherCardPage error={error} cities={cities}/>
+            <WeatherCardPage 
+            error={error} 
+            cities={cities}
+            />
         </div>
     );
 }
