@@ -1,6 +1,8 @@
+import _ from  'lodash'
 import { Accordion, Container } from 'react-bootstrap'
 
 export default function CityCard(props) {
+    const styleFont = {"fontSize" : "20pt"};
 
     function toFahrenheit(celsius) {
         return (Number(celsius) * 9 / 5 + 32).toFixed(2);
@@ -9,15 +11,15 @@ export default function CityCard(props) {
     return (
         <tr><td>
             {props.city &&
-            <div className='w-100 text-white'
-            style={{ "backgroundImage": "url('" + props.city.background + "')", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "textShadow": "1px 2px 5px black" }}>
+            <div className=' p-3 w-100 text-white'
+            style={{ "fontFamily" : "serif", "backgroundImage": "url('" + props.city.background + "')", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "textShadow": "1px 2px 5px black" }}>
                         <h2 className="mb-1 sfw-normal">
-                            {props.city.name}, {props.city.country} <img style={{ "width": "25px", "height": "20px" }} src={props.city.flag.toLowerCase()} alt="flag.svg" />
+                            {props.city.name}, {props.city.country} <img style={{ "width": "3rem", "height": "auto" }} src={props.city.flag.toLowerCase()} alt="flag.svg" />
                         </h2>
                         <div style={{ "fontSize": "13pt", "textDecoration": "underline" }}>
-                            <p>Condition: <strong >{props.city.desc}</strong><img style={{ "width": "30px", "height": "30px" }} src={props.city.icon} alt="icon.png" /></p>
-                            <p>Temperature: <strong>{(props.tempFormat === "C") ? props.city.temp.value : toFahrenheit(props.city.temp.value)}°{props.tempFormat} |</strong> 
-                            Feels like: <strong>{(props.tempFormat === "C") ? props.city.temp.feel : toFahrenheit(props.city.temp.feel)}°{props.tempFormat}</strong></p>
+                            <p>Condition: <strong style={{"fontSize" : "15pt"}}>{_.startCase(props.city.desc)}</strong><img style={{ "width": "50px", "height": "50px" }} src={props.city.icon} alt="icon.png" /></p>
+                            <p>Temperature: <strong style={styleFont}>{(props.tempFormat === "C") ? props.city.temp.value : toFahrenheit(props.city.temp.value)}°{props.tempFormat} |</strong> 
+                            Feels like: <strong style={styleFont}>{(props.tempFormat === "C") ? props.city.temp.feel : toFahrenheit(props.city.temp.feel)}°{props.tempFormat}</strong></p>
                         </div>
                         <Container>
                 <Accordion defaultActiveKey="0">

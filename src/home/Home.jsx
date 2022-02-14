@@ -26,12 +26,6 @@ export default function Home(props) {
         }
     }
 
-    function convertTemp(temp, CF) {
-        let conversion = Number(temp);
-        conversion = (CF === "F") ? conversion * 9 / 5 + 32 : (conversion - 32) * 5 / 9;
-        return conversion.toFixed(2);
-    }
-    
     return (
         <div>
             <SearchCard 
@@ -44,6 +38,7 @@ export default function Home(props) {
             pageHandler={pageControl}
             setCities={setAllCities}
             setPageNo={setCurrentPage}
+            recentCitiesHandler={props.recentCitiesHandler}
             />
 
             <WeatherCardPage 

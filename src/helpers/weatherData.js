@@ -1,24 +1,22 @@
 import _ from 'lodash'
 import moment from 'moment'
 
- export default async function fetchData(qString, tempFormat) {
+ export default async function fetchData(qString) {
     if (qString === "" || qString === "undefined") return;
     let weatherCards = [];
 
-    const res = await fetch(`https://pro.openweathermap.org/data/2.5/find?q=${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml&cnt=50`);
+    const res = await fetch(`https://pro.openweathermap.org/data/2.5/${(isNaN(qString)) ? "find?q=" : "weather?id="}${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml&cnt=50`);
     let data = await res.text();
     data = new window.DOMParser().parseFromString(data, "text/xml");
     
-    if (data !== 'undefined' || Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
+    if(data === 'undefined' || !data) return weatherCards;
+
+    if(data.getElementsByTagName("current").length > 0) weatherCards.unshift(parseXML(data));
+    else if (Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
     _.forEach(data.getElementsByTagName("item"), (city) => {
-        weatherCards.unshift(parseXML(city, tempFormat));
+        weatherCards.unshift(parseXML(city));
     })
     return weatherCards;
-}
-
-function toFahrenheit(celsius) {
-    let fahrenheit = Number(celsius) * 9 / 5 + 32;
-    return fahrenheit.toFixed(2);
 }
 
 function genBackground(condition) {
@@ -40,9 +38,10 @@ function genBackground(condition) {
     return bg;
 }
 
-function parseXML(XMLdata, tempFormat) {
+function parseXML(XMLdata) {
     let wt_data = {};
     wt_data = {
+        id: XMLdata.getElementsByTagName("city")[0].getAttribute("id"),
         background: genBackground(XMLdata.getElementsByTagName("weather")[0].getAttribute("number")),
         name: XMLdata.getElementsByTagName("city")[0].getAttribute("name"),
         country: XMLdata.getElementsByTagName("country")[0].innerHTML,
@@ -50,10 +49,10 @@ function parseXML(XMLdata, tempFormat) {
         icon: `http://openweathermap.org/img/wn/${XMLdata.getElementsByTagName("weather")[0].getAttribute("icon")}@2x.png`,
         desc: XMLdata.getElementsByTagName("weather")[0].getAttribute("value"),
         temp: {
-            value: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("value")),
-            feel: (tempFormat === "C") ? XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value") : toFahrenheit(XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value")),
-            min: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("min") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("min")),
-            max: (tempFormat === "C") ? XMLdata.getElementsByTagName("temperature")[0].getAttribute("max") : toFahrenheit(XMLdata.getElementsByTagName("temperature")[0].getAttribute("max"))
+            value: XMLdata.getElementsByTagName("temperature")[0].getAttribute("value"),
+            feel: XMLdata.getElementsByTagName("feels_like")[0].getAttribute("value"),
+            min: XMLdata.getElementsByTagName("temperature")[0].getAttribute("min"),
+            max: XMLdata.getElementsByTagName("temperature")[0].getAttribute("max")
         },
         pressure: XMLdata.getElementsByTagName("pressure")[0].getAttribute("value"),
         humidity: XMLdata.getElementsByTagName("humidity")[0].getAttribute("value"),

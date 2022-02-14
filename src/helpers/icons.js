@@ -13,6 +13,9 @@ import {TiWeatherPartlySunny} from 'react-icons/ti'
 import {GiModernCity} from 'react-icons/gi'
 import {MdFindInPage} from 'react-icons/md'
 import {BiCommentDetail} from 'react-icons/bi'
+import {FaMapMarkedAlt} from 'react-icons/fa'
+import {BsGlobe2} from 'react-icons/bs'
+import {AiOutlineClear} from 'react-icons/ai'
 import ReactLogo from '../icons/logo.svg?component'
 import '../css/logo.css'
 
@@ -32,5 +35,8 @@ export {
     TiWeatherPartlySunny as Weather,
     GiModernCity as CityID,
     MdFindInPage as Find,
-    BiCommentDetail as Details
+    BiCommentDetail as Details,
+    FaMapMarkedAlt as Map,
+    BsGlobe2 as Globe,
+    AiOutlineClear as Clear
 }

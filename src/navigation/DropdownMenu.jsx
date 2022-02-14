@@ -35,13 +35,13 @@ export default function CusDropdownMenu(props) {
             <CSSTransition in={m_active === 'settings'} unmountOnExit timeout={500} classNames={`cus-menu-secondary`} onEnter={calcHeight}>
                 <div className='cus-menu'>
                     <CusDropdownItem leftIcon={<Icons.Arrow/>} goToMenu="main"><u><b>Back</b></u></CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.Find/>}><u>Recent Cities</u></CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
-                    <CusDropdownItem leftIcon={<Icons.CityID/>} >CityID</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.Find/>} rightIcon="v"><u>Recent Cities</u></CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
+                    <CusDropdownItem leftIcon={<Icons.CityID/>} >[CityID]</CusDropdownItem>
 
                 </div>
             </CSSTransition>
