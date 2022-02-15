@@ -1,6 +1,6 @@
 
 
-export default function AllCities(props) {
+export default function Map(props) {
     return (
         <div>
 

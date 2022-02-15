@@ -1,53 +1,50 @@
- /* Dropdown Menu */
-  
- .cus-dropdown {
-    position: absolute;
-    top: 4rem;
-    width: 14rem;
-    transform: translateX(45%);
-    background-color: var(--bg);
-    border: var(--border);
-    border-radius: var(--border-radius);
-    padding: 0.6rem;
-    overflow: hidden;
-    transition: all var(--speed) ease;
-    box-sizing: content-box !important;
-  }
-  
-  .cus-menu {
-    width: 100%;
-  }
+/* Dropdown Menu */
 
-  
-  /* CSSTransition classes  */
-  .cus-menu-primary-enter {
-    position: absolute;
-    transform: translateX(-100%);
-  }
-  .cus-menu-primary-enter-active {
-    transform: translateX(0%);
-    transition: all var(--speed) ease;
-  }
-  .cus-menu-primary-exit {
-    position: absolute;
-  }
-  .cus-menu-primary-exit-active {
-    transform: translateX(-100%);
-    transition: all var(--speed) ease;
-  }
-  
-  
-  .cus-menu-secondary-enter {
-    transform: translateX(100%);
-  }
-  .cus-menu-secondary-enter-active {
-    transform: translateX(0%);
-    transition: all var(--speed) ease;
-  }
-  .cus-menu-secondary-exit {
-  
-  }
-  .cus-menu-secondary-exit-active {
-    transform: translateX(100%);
-    transition: all var(--speed) ease;
-  }
+.cus-dropdown {
+  position: absolute;
+  top: 4rem;
+  width: 14rem;
+  transform: translateX(45%);
+  background-color: var(--bg);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 0.6rem;
+  overflow: hidden;
+  transition: all var(--speed) ease;
+  box-sizing: content-box !important;
+}
+
+.cus-menu {
+  width: 100%;
+}
+
+/* CSSTransition classes  */
+.cus-menu-primary-enter {
+  position: absolute;
+  transform: translateX(-100%);
+}
+.cus-menu-primary-enter-active {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+}
+.cus-menu-primary-exit {
+  position: absolute;
+}
+.cus-menu-primary-exit-active {
+  transform: translateX(-100%);
+  transition: all var(--speed) ease;
+}
+
+.cus-menu-secondary-enter {
+  transform: translateX(100%);
+}
+.cus-menu-secondary-enter-active {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+}
+.cus-menu-secondary-exit {
+}
+.cus-menu-secondary-exit-active {
+  transform: translateX(100%);
+  transition: all var(--speed) ease;
+}

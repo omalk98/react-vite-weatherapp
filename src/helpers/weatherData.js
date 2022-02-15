@@ -12,6 +12,7 @@ import moment from 'moment'
     if(data === 'undefined' || !data) return weatherCards;
 
     if(data.getElementsByTagName("current").length > 0) weatherCards.unshift(parseXML(data));
+    else if(Number(data.getElementsByTagName("cod")[0]?.innerHTML) === 404 || Number(data.getElementsByTagName("cod")[0]?.innerHTML) === 400) return weatherCards;
     else if (Number(data.getElementsByTagName("count")[0].innerHTML) > 0)
     _.forEach(data.getElementsByTagName("item"), (city) => {
         weatherCards.unshift(parseXML(city));
@@ -57,8 +58,8 @@ function parseXML(XMLdata) {
         pressure: XMLdata.getElementsByTagName("pressure")[0].getAttribute("value"),
         humidity: XMLdata.getElementsByTagName("humidity")[0].getAttribute("value"),
         sun: {
-            rise: moment(XMLdata.getElementsByTagName("sun")[0].getAttribute("rise") + "z").format("HH:mm"),
-            set: moment(XMLdata.getElementsByTagName("sun")[0].getAttribute("set") + "z").format("HH:mm")
+            rise: moment(XMLdata.getElementsByTagName("sun")[0].getAttribute("rise") + "Z").format("HH:mm"),
+            set: moment(XMLdata.getElementsByTagName("sun")[0].getAttribute("set") + "Z").format("HH:mm")
         },
         coord: {
             lon: XMLdata.getElementsByTagName("coord")[0].getAttribute("lon"),

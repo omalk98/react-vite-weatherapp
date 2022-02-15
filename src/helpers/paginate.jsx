@@ -2,8 +2,8 @@ import _ from "lodash"
 import { Button, Table } from "react-bootstrap";
 import CityCard from '../home/CityCard'
 
-export default function paginateCards(data, currentPage, tempFormat, pageHandler) {
-    if(data === 'undefined' || data === null) return;
+export default function paginateCards(data, currentPage, tempFormat, pageHandler, idHandler) {
+    if (data === 'undefined' || data === null) return;
     const numRows = 3;
     const numPages = Math.ceil(data.length / numRows);
 
@@ -11,7 +11,7 @@ export default function paginateCards(data, currentPage, tempFormat, pageHandler
         <div>
             <Table hover>
                 <tbody>
-                    {parseComp(parsePages(data, currentPage, numRows), tempFormat)}
+                    {parseComp(parsePages(data, currentPage, numRows), tempFormat, idHandler)}
                 </tbody>
             </Table>
             {genButtons(numPages, currentPage, pageHandler)}
@@ -19,9 +19,9 @@ export default function paginateCards(data, currentPage, tempFormat, pageHandler
     );
 }
 
-function parseComp(cities, format) {
+function parseComp(cities, format, idHandler) {
     let i = 0, newComps = [];
-    _.forEach(cities, (ct) => { newComps.unshift(<CityCard city={ct} tempFormat={format} key={i++} />) });
+    _.forEach(cities, (ct) => { newComps.unshift(<CityCard city={ct} handler={idHandler} tempFormat={format} key={i++} />) });
     return newComps;
 }
 
@@ -45,8 +45,8 @@ function genButtons(numPages, currentPage, pageHandler) {
 
     return (
         <div className="text-center">
-            <ul className="d-flex" style={{"listStyleType" : "none"}}>
-            {buttons}
+            <ul className="d-flex" style={{ "listStyleType": "none" }}>
+                {buttons}
             </ul>
         </div>
     );

@@ -1,26 +1,62 @@
 import { useState, useEffect } from 'react';
-import _ from 'lodash'
+import { useParams } from 'react-router-dom'
 import { Container, Form, Card, Row, Col, Button } from 'react-bootstrap'
+import _ from 'lodash'
 import fetchData from '../helpers/weatherData'
 import paginateCards from '../helpers/paginate';
 import NotFound from '../NotFound'
 import * as Icons from '../helpers/icons'
 
-
 export default function SearchCard(props) {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [geoLocation, setGeoLocation] = useState(null);
+    const { id } = useParams();
 
-    useEffect(async ()=>{
+    useEffect(async () => {
+        if (!id || id === undefined) return;
+        await updateCards(id, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
+    }, [id]);
+
+    useEffect(async () => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(getCurrentGeoWeather, 
-                ()=>{props.errorHandler(<NotFound handler={props.errorHandler} text="Problem Getting Geolocation."/>)});
+            navigator.geolocation.getCurrentPosition(getCurrentGeoWeather,
+                () => { props.errorHandler(<NotFound handler={props.errorHandler} text="Problem Getting Geolocation." />) });
         }
-    },[geoLocation]);
-    
+    }, [geoLocation]);
+
+    async function getCurrentGeoWeather(position) {
+        if (!position) return;
+        if (!geoLocation) setGeoLocation(position);
+        if (id) return;
+        await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
+    }
+
+    async function submitSearch(e) {
+        e.preventDefault();
+        await updateCards(search, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
+    }
+
+    async function updateCards(queryString, currentPage, tempFormat, pageHandler, recentCitiesHandler) {
+        props.setPageNo(1);
+        setLoading(true);
+        props.errorHandler(null);
+
+        if (!queryString || queryString == "") props.errorHandler(<NotFound handler={props.errorHandler} text="No String Provided." />);
+        let newComp = await fetchData(queryString);
+
+        if (!newComp) props.errorHandler(<NotFound handler={props.errorHandler} text="Bad Request" />);
+        else if (newComp.length === 0) props.errorHandler(<NotFound handler={props.errorHandler} text="No Data Found" />);
+        else {
+            props.setCities(newComp);
+            props.cardHandler(paginateCards(newComp, currentPage, tempFormat, pageHandler, recentCitiesHandler));
+        }
+
+        if (queryString !== "Blockme") setLoading(false);
+    }
+
     function wordProcess(searchString) {
-        if (searchString.includes(',')){
+        if (searchString.includes(',')) {
             let formString = searchString.split(',')
             formString[0] = _.startCase(formString[0]);
             formString[1] = formString[1].toUpperCase();
@@ -29,49 +65,26 @@ export default function SearchCard(props) {
         else return _.startCase(searchString);
     }
 
-    async function getCurrentGeoWeather(position) {
-        if(!position) return;
-        let currentGeoWeather =  await fetchData(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`);
-        if(!currentGeoWeather || currentGeoWeather.length === 0) props.errorHandler(<NotFound handler={props.errorHandler} text="Unable to Get Geolocation Data."/>)
-        props.setCities(currentGeoWeather);
-        props.cardHandler(paginateCards(currentGeoWeather, props.currentPage, props.tempFormat, props.pageHandler));
-        if (!geoLocation) setGeoLocation(position);
-    }
-
-    async function submitSearch(e) {
-        props.setPageNo(1);
-        setLoading(true);
-        props.errorHandler(null);
-        e.preventDefault();
-        let newComp = await fetchData(search);
-        if(newComp === undefined) props.errorHandler(<NotFound handler={props.errorHandler} text="No String Provided."/>);
-        else if (newComp.length === 0) props.errorHandler(<NotFound handler={props.errorHandler} text="No Data Found"/>);
-        else {
-            props.setCities(newComp);
-            props.cardHandler(paginateCards(newComp, props.currentPage, props.tempFormat, props.pageHandler));
-            props.recentCitiesHandler(newComp);
-        }
-        setLoading(false);
-    }
-
     return (
         <section>
             <Container className='w-100 h-100 mt-5 '>
                 <Row className='d-flex justify-content-center align-items-center h-100'>
                     <Col className='col-md-8 col-lg-6 col-xl-5'>
-                        <Card className='w-100 h-100 p-2 position-static shadow-lg' style={{ "textShadow": "1px 2px 8px black", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "backgroundColor": "var(--bs-gray-600)", "backgroundImage": "url('https://media1.tenor.com/images/69420a9494909231ca2752a175839fec/tenor.gif')" }}>
+                        <Card className='w-100 h-100 p-2 position-static shadow-lg'
+                            style={{ "textShadow": "1px 2px 8px black", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "backgroundColor": "var(--bs-gray-600)", "backgroundImage": "url('https://media1.tenor.com/images/69420a9494909231ca2752a175839fec/tenor.gif')" }}
+                        >
                             <Card.Body className='position-static'>
-                                <Card.Title style={{"fontFamily" : "serif", "fontSize" : "16pt"}} className="mb-4 pb-2 fw-normal text-white text-shadow">Check the weather forecast for&nbsp;&nbsp; 
-                                <span style={{"color" : "var(--bs-yellow)"}}>{search}</span></Card.Title>
+                                <Card.Title style={{ "fontFamily": "serif", "fontSize": "16pt" }} className="mb-4 pb-2 fw-normal text-white text-shadow">Check the weather forecast for&nbsp;&nbsp;
+                                    <span style={{ "color": "var(--bs-yellow)" }}>{search}</span></Card.Title>
                                 <Form method='GET' action='#' className='form-inline' onSubmit={submitSearch}>
                                     <Form.Group controlId="weatherSearch">
                                         <div className='input-group position-static'>
                                             <div className="input-group-prepend position-static" >
-                                                <span className="input-group-text text-white bg-secondary h-100" id="basic-addon1"><Icons.Details/></span>
+                                                <span className="input-group-text text-white bg-secondary h-100" id="basic-addon1"><Icons.Details /></span>
                                             </div>
                                             <Form.Control className='bg-dark text-white position-static' type='text' placeholder='City, CC' onChange={(e) => setSearch(wordProcess(e.target.value))} />
-                                            { !loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button> }
-                                            { loading && <Button disabled={true} variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button> }
+                                            {!loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button>}
+                                            {loading && <Button disabled={true} variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
                                         </div>
                                     </Form.Group>
 
@@ -94,8 +107,8 @@ export default function SearchCard(props) {
                                             </span>
                                             <span className="">
                                                 <div className="form-check form-check-inline">
-                                                    <Button variant='secondary' className='btn-sm'
-                                                         value="Local" onClick={() => getCurrentGeoWeather(geoLocation)}><Icons.Map />&nbsp;Local</Button>
+                                                    {loading && <Button disabled={true} variant='secondary' className='btn-sm'>...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
+                                                    {!loading && <Button variant='secondary' className='btn-sm' value="Local" onClick={() => getCurrentGeoWeather(geoLocation)}><Icons.Map />&nbsp;Local</Button>}
                                                 </div>
                                             </span>
                                             <span className="">

@@ -16,6 +16,19 @@ import {BiCommentDetail} from 'react-icons/bi'
 import {FaMapMarkedAlt} from 'react-icons/fa'
 import {BsGlobe2} from 'react-icons/bs'
 import {AiOutlineClear} from 'react-icons/ai'
+import {BsEyeFill} from 'react-icons/bs'
+import {GiWorld} from 'react-icons/gi'
+import {SiWolframmathematica} from 'react-icons/si'
+import {BsThermometerSnow} from 'react-icons/bs'
+import {BsThermometerSun} from 'react-icons/bs'
+import {BsThermometerHalf} from 'react-icons/bs'
+import {BsFillSunsetFill} from 'react-icons/bs'
+import {BsFillSunriseFill} from 'react-icons/bs'
+import {BsWind} from 'react-icons/bs'
+import {BsClouds} from 'react-icons/bs'
+import {WiHumidity} from 'react-icons/wi'
+import {BsSpeedometer} from 'react-icons/bs'
+import {BsPinMap} from 'react-icons/bs'
 import ReactLogo from '../icons/logo.svg?component'
 import '../css/logo.css'
 
@@ -37,6 +50,19 @@ export {
     MdFindInPage as Find,
     BiCommentDetail as Details,
     FaMapMarkedAlt as Map,
+    GiWorld as World,
     BsGlobe2 as Globe,
-    AiOutlineClear as Clear
+    AiOutlineClear as Clear,
+    BsEyeFill as Eye,
+    SiWolframmathematica as Math,
+    BsThermometerHalf as AvgTemp,
+    BsThermometerSun as HighTemp,
+    BsThermometerSnow as LowTemp,
+    BsFillSunsetFill as SunSet,
+    BsFillSunriseFill as SunRise,
+    BsWind as Wind,
+    BsClouds as Clouds,
+    WiHumidity as Humidity,
+    BsSpeedometer as Pressure,
+    BsPinMap as Pin
 }

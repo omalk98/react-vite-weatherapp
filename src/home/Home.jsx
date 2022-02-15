@@ -11,7 +11,7 @@ export default function Home(props) {
     const [error, setError] = useState(false);
     const [tempFormat, setTempFormat] = useState("C");
 
-    useEffect(()=> setCities(paginateCards(allCities, currentPage, tempFormat, pageControl)), [currentPage, allCities, tempFormat]);
+    useEffect(() => setCities(paginateCards(allCities, currentPage, tempFormat, pageControl, props.recentCitiesHandler)), [currentPage, allCities, tempFormat]);
 
     function pageControl(e) {
         switch (e.target.value) {
@@ -28,22 +28,22 @@ export default function Home(props) {
 
     return (
         <div>
-            <SearchCard 
-            tempHandler={setTempFormat} 
-            tempFormat={tempFormat}
-            errorHandler={setError}
-            cardHandler={setCities}
-            components={cities}
-            currentPage={currentPage}
-            pageHandler={pageControl}
-            setCities={setAllCities}
-            setPageNo={setCurrentPage}
-            recentCitiesHandler={props.recentCitiesHandler}
+            <SearchCard
+                tempHandler={setTempFormat}
+                tempFormat={tempFormat}
+                errorHandler={setError}
+                cardHandler={setCities}
+                components={cities}
+                currentPage={currentPage}
+                pageHandler={pageControl}
+                setCities={setAllCities}
+                setPageNo={setCurrentPage}
+                recentCitiesHandler={props.recentCitiesHandler}
             />
 
-            <WeatherCardPage 
-            error={error} 
-            cities={cities}
+            <WeatherCardPage
+                error={error}
+                cities={cities}
             />
         </div>
     );

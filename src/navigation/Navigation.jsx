@@ -8,20 +8,19 @@ import CusDropdownMenu from "./DropdownMenu"
 import CusSearchBox from "./SearchBox"
 import * as Icons from '../helpers/icons'
 
-const pushstyle ={} ={"marginTop": "7px"};
 
-export default function Navigation() {
+export default function Navigation(props) {
+  const pushstyle = {} = { "marginTop": "7px" };
 
   return (
     <div className="cus-nav-bar-main">
       <CusNavbar>
-        <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home/>}></CusNavitem></Link>
-        <Link to="/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Globe/>}></CusNavitem></Link>
-        <Link to="/cities" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.City/>}></CusNavitem></Link>
-        <CusNavitem icon={<Icons.Caret/>}> 
-          <CusDropdownMenu/>
+        <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home />}></CusNavitem></Link>
+        <Link to="/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.World />}></CusNavitem></Link>
+        <CusNavitem icon={<Icons.Caret />}>
+          <CusDropdownMenu cityId={props.cityId} />
         </CusNavitem>
-        <CusSearchBox/>
+        <CusSearchBox />
       </CusNavbar>
     </div>
   )
