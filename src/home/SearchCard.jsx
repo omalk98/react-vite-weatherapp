@@ -10,11 +10,13 @@ import * as Icons from '../helpers/icons'
 export default function SearchCard(props) {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
-    const [geoLocation, setGeoLocation] = useState(null);
+    const [geoLocation, setGeoLocation] = useState();
+    const [currentID, setCurrentID] = useState();
     const { id } = useParams();
 
     useEffect(async () => {
         if (!id || id === undefined) return;
+        setCurrentID(id);
         await updateCards(id, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
     }, [id]);
 
@@ -28,7 +30,7 @@ export default function SearchCard(props) {
     async function getCurrentGeoWeather(position) {
         if (!position) return;
         if (!geoLocation) setGeoLocation(position);
-        if (id) return;
+        if (id && id !== currentID) return;
         await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
     }
 
