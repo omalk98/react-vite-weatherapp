@@ -5,7 +5,7 @@ import moment from 'moment'
     if (qString === "" || qString === "undefined") return;
     let weatherCards = [];
 
-    const res = await fetch(`https://pro.openweathermap.org/data/2.5/${(isNaN(qString)) ? "find?q=" : "weather?id="}${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_API_KEY}&units=metric&mode=xml&cnt=50`);
+    const res = await fetch(`https://pro.openweathermap.org/data/2.5/${(isNaN(qString)) ? "find?q=" : "weather?id="}${qString.split(' ').join(' ')}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric&mode=xml&cnt=50`);
     let data = await res.text();
     data = new window.DOMParser().parseFromString(data, "text/xml");
     

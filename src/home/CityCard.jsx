@@ -9,6 +9,10 @@ export default function CityCard(props) {
         return (Number(celsius) * 9 / 5 + 32).toFixed(2);
     }
 
+    function submitCache(e) {
+        props.handler({ "id": props.city.id, "name": props.city.name, "country": props.city.country, "coord": { "lat": props.city.coord.lat, "lon": props.city.coord.lon } })
+    }
+
     return (
         <tr><td style={{ "borderRadius": "2rem" }}>
             {props.city &&
@@ -28,7 +32,7 @@ export default function CityCard(props) {
                     </div>
                     <Container style={{ "fontSize": "15pt" }}>
                         <Accordion defaultActiveKey="0">
-                            <Accordion.Header onClick={() => props.handler({ "id": props.city.id, "name": props.city.name, "country": props.city.country })} style={{ "backgroundColor": "var(--bs-gray-800) !important" }}><Icons.Math />&nbsp;More Details</Accordion.Header>
+                            <Accordion.Header onClick={submitCache} style={{ "backgroundColor": "var(--bs-gray-800) !important" }}><Icons.Math />&nbsp;More Details</Accordion.Header>
                             <Accordion.Body>
                                 <table className='w-100'>
                                     <tbody>
