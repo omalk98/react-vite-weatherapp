@@ -16,10 +16,11 @@ function App() {
     let storageKeys = recentCities;
     if (!storageKeys || storageKeys === undefined) storageKeys = [];
 
-    if (storageKeys.length >= 6) storageKeys.pop();
     let i = 0;
     for (; i < storageKeys.length; ++i)
       if (cities.id == storageKeys[i].id) return;
+
+    if (storageKeys.length >= 6) storageKeys.pop();
 
     storageKeys.unshift(cities)
     setRecentCities(storageKeys);
