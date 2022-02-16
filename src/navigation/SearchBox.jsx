@@ -13,14 +13,16 @@ export default function CusSearchBox() {
     }
 
     return (
-        <Form method='GET' action='#' className='form-inline col-2 ms-auto cus-nav-search' style={{ "marginTop": "0.8rem" }} onSubmit={handleSubmit}>
+        <Form method='GET' action='#' className='form-inline col-2 ms-auto' style={{ "marginTop": "0.8rem" }} onSubmit={handleSubmit}>
             <Form.Group controlId='citySearch'>
                 <div className='input-group'>
-                    <div className="input-group-prepend" >
+                    <span className="input-group-prepend d-flex" >
                         <span className="input-group-text text-white bg-secondary" style={{ "margin": "0", "padding": "0" }}><Icons.ReactLogo className='App-logo' /></span>
-                    </div>
-                    <Form.Control className='bg-dark text-white' type='text' placeholder='CityID' onChange={(e) => { setSearch(e.target.value) }} />
-                    <Button key={9999} variant='success' type='submit'><Icons.Search /></Button>
+                    <span className='cus-nav-search d-flex'>
+                        <Form.Control className='bg-dark text-white' type='text' placeholder='CityID' onChange={(e) => { setSearch(e.target.value) }} />
+                        <Button key={9999} variant='success' type='submit'><Icons.Search /></Button>
+                    </span>
+                    </span>
                 </div>
             </Form.Group>
         </Form>
