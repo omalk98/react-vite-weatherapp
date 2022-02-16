@@ -1,12 +1,12 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import './css/Navigation.css'
-import CusNavbar from "./Navbar"
 import CusNavitem from "./Navitem"
 import CusDropdownMenu from "./DropdownMenu"
 import CusSearchBox from "./SearchBox"
 import * as Icons from '../helpers/icons'
+import './css/Navbar.css'
+import './css/Navigation.css'
 
 
 export default function Navigation(props) {
@@ -14,14 +14,17 @@ export default function Navigation(props) {
 
   return (
     <div className="cus-nav-bar-main">
-      <CusNavbar>
-        <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home />}></CusNavitem></Link>
-        <Link to="/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.World />}></CusNavitem></Link>
-        <CusNavitem icon={<Icons.Caret />}>
-          <CusDropdownMenu cityId={props.cityId} />
-        </CusNavitem>
-        <CusSearchBox />
-      </CusNavbar>
+      <nav className="cus-navbar">
+        <ul className="cus-navbar-nav">
+          <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home />}></CusNavitem></Link>
+          <Link to="/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.World />}></CusNavitem></Link>
+          <CusNavitem icon={<Icons.Caret />}>
+            <CusDropdownMenu cityId={props.cityId} />
+          </CusNavitem>
+         
+          <CusSearchBox />
+        </ul>
+      </nav>
     </div>
   )
 }

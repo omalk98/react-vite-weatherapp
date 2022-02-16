@@ -13,7 +13,7 @@ export default function CusSearchBox() {
     }
 
     return (
-        <Form method='GET' action='#' className='form-inline col-2 ms-auto' style={{ "marginTop": "0.8rem" }} onSubmit={handleSubmit}>
+        <Form method='GET' action='#' className='form-inline col-2 ms-auto cus-nav-search' style={{ "marginTop": "0.8rem" }} onSubmit={handleSubmit}>
             <Form.Group controlId='citySearch'>
                 <div className='input-group'>
                     <div className="input-group-prepend" >

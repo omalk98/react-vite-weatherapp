@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
-
 import Home from './home/Home'
-import Map from './map/Map'
+import MapContainer from './map/Map'
 import NotFound from './NotFound'
 import Navigation from './navigation/Navigation'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   const [recentCities, setRecentCities] = useState(localStorage.getItem("cities") ? JSON.parse(localStorage.getItem("cities")) : []);
+  const [recentSearches, setRecentSearch] = useState([]);
 
   function dumpSearchHistory(cities) {
     if (!cities || cities === undefined) return;
@@ -29,13 +29,26 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navigation style={{ 'zIndex': 0 }} cityId={recentCities} />
-      <Routes style={{ 'zIndex': 1000 }}>
+      <Navigation style={{ zIndex : 1000000 }} cityId={recentCities} />
+      <Routes style={{ zIndex : 0 }}>
         <Route exact path="/" element={<Navigate to={"/home"} replace />} />
-        <Route exact path="/home" element={<Home recentCitiesHandler={dumpSearchHistory} />} />
-        <Route exact path="/home/:id" element={<Home recentCitiesHandler={dumpSearchHistory} />} />
-        <Route exact path="/cities" element={<Map />} />
-        <Route path="*" element={<NotFound text='Page Not Found.' className="position-static" />} />
+        <Route exact path="/home" element={<Home 
+            recentSearchesHandler={setRecentSearch} 
+            recentCitiesHandler={dumpSearchHistory}
+            searches={recentSearches} 
+            locations={recentCities}
+        />} />
+        <Route exact path="/home/:id" element={<Home 
+            recentSearchesHandler={setRecentSearch} 
+            recentCitiesHandler={dumpSearchHistory} 
+            searches={recentSearches} 
+            locations={recentCities}    
+        />} />
+        <Route exact path="/map" element={<MapContainer 
+            searches={recentSearches} 
+            locations={recentCities} 
+        />} />
+        <Route path="*" element={<NotFound text='Page Not Found.'/>} />
       </Routes>
     </BrowserRouter>
   )

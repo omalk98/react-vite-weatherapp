@@ -31,7 +31,7 @@ export default function SearchCard(props) {
         if (!position) return;
         if (!geoLocation) setGeoLocation(position);
         if (id && id !== currentID) return;
-        await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
+        await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler, true);
     }
 
     async function submitSearch(e) {
@@ -39,7 +39,7 @@ export default function SearchCard(props) {
         await updateCards(search, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
     }
 
-    async function updateCards(queryString, currentPage, tempFormat, pageHandler, recentCitiesHandler) {
+    async function updateCards(queryString, currentPage, tempFormat, pageHandler, recentCitiesHandler, isGeoPos = false) {
         props.setPageNo(1);
         setLoading(true);
         props.errorHandler(null);
@@ -52,6 +52,7 @@ export default function SearchCard(props) {
         else {
             props.setCities(newComp);
             props.cardHandler(paginateCards(newComp, currentPage, tempFormat, pageHandler, recentCitiesHandler));
+            if(!isGeoPos) props.recentSearchesHandler(newComp.map((elem)=> {return {id : elem.id, name : elem.name, country : elem.country, coord : {lat : elem.coord.lat, lon : elem.coord.lon}}}));
         }
 
         if (queryString !== "Blockme") setLoading(false);

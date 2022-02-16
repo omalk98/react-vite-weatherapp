@@ -8,7 +8,8 @@ export default function WeatherCardPage(props) {
                 <Row className='d-flex justify-content-center align-items-center h-100'>
                     <Col className='col-md-8 col-lg-6 col-xl-5'>
                         {props.error && props.error}
-                        {<Alert variant='success' ><b>Last Updated:</b> {moment().format("MMMM Do YYYY, h:mm:ss a")}</Alert>}
+                        <Alert className='text-center position-static' variant='success'><u><b>Last Updated:</b> {moment().format("hh:mm:ss a")}</u></Alert>
+                        {props.children}
                         {props.cities}
                     </Col>
                 </Row>
