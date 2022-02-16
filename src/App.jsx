@@ -32,6 +32,7 @@ function App() {
       <Navigation style={{ zIndex : 1000000 }} cityId={recentCities} />
       <Routes style={{ zIndex : 0 }}>
         <Route exact path="/" element={<Navigate to={"/home"} replace />} />
+        <Route exact path="/react-vite-weatherapp" element={<Navigate to={"/home"} replace />} />
         <Route exact path="/home" element={<Home 
             recentSearchesHandler={setRecentSearch} 
             recentCitiesHandler={dumpSearchHistory}
