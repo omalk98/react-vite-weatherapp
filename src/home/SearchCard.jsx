@@ -87,7 +87,7 @@ export default function SearchCard(props) {
                                             </div>
                                             <Form.Control className='bg-dark text-white position-static' type='text' placeholder='City, CC' onChange={(e) => setSearch(wordProcess(e.target.value))} />
                                             {!loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button>}
-                                            {loading && <Button disabled={true} variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
+                                            {loading && <Button disabled variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
                                         </div>
                                     </Form.Group>
 

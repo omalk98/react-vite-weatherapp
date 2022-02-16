@@ -43,11 +43,8 @@ export default function Home(props) {
                 recentCitiesHandler={props.recentCitiesHandler}
                 recentSearchesHandler={props.recentSearchesHandler}
             />
-            <WeatherCardPage
-                error={error}
-                cities={cities}
-            >
-                {cities && <Card className='m-auto mt-5 shadow-lg p-3 position-relative' style={{ height: '50vh', width: '40vw', backgroundColor: "var(--bs-gray-200)" }}>
+
+{cities && <Card className=' cus-resize-card m-auto mt-5 shadow-lg p-3 position-static'>
                     <Card.Title style={{ "fontFamily": "Stencil Std, serif" }} className='text-black text-center'>Recently Searched Cities</Card.Title>
                     <Alert variant='dark' className='m-auto d-flex' style={{ height: "2.8rem" }}>
                         <span className='d-flex w-100' style={{ marginTop: "-.7rem", fontFamily: "cursive, serif" }}>
@@ -86,8 +83,12 @@ export default function Home(props) {
                     </Card.Body>
                 </Card>
                 }
-                <br /><br />
 
+            <WeatherCardPage
+                error={error}
+                cities={cities}
+            >
+                <br /><br />
             </WeatherCardPage>
         </div>
     );
