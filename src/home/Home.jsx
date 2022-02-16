@@ -46,8 +46,8 @@ export default function Home(props) {
 
 {cities && <Card className=' cus-resize-card m-auto mt-5 shadow-lg p-3 position-static'>
                     <Card.Title style={{ "fontFamily": "Stencil Std, serif" }} className='text-black text-center'>Recently Searched Cities</Card.Title>
-                    <Alert variant='dark' className='m-auto d-flex' style={{ height: "2.8rem" }}>
-                        <span className='d-flex w-100' style={{ marginTop: "-.7rem", fontFamily: "cursive, serif" }}>
+                    <Alert variant='dark' className='m-auto d-flex position-static' style={{ height: "2.8rem" }}>
+                        <span className='d-flex w-100 position-static' style={{ marginTop: "-.7rem", fontFamily: "cursive, serif" }}>
                             <span className='ms-auto ps-4 pe-4'>
                                 <div
                                     className="pin bounce position-static"
