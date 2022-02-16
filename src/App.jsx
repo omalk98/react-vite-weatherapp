@@ -28,7 +28,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/react-vite-weatherapp'>
       <Navigation style={{ zIndex : 1000000 }} cityId={recentCities} />
       <Routes style={{ zIndex : 0 }}>
         <Route exact path="/" element={<Navigate to={"/home"} replace />} />
