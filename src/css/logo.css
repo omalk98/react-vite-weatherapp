@@ -27,6 +27,9 @@
     margin: 0;
     padding: 0;
   }
+  .cus-dropdown {
+    transform: translateX(0) !important;
+  }
 }
 .cus-resize-card {
   width : 50vw;

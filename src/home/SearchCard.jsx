@@ -52,7 +52,7 @@ export default function SearchCard(props) {
         else {
             props.setCities(newComp);
             props.cardHandler(paginateCards(newComp, currentPage, tempFormat, pageHandler, recentCitiesHandler));
-            if(!isGeoPos) props.recentSearchesHandler(newComp.map((elem)=> {return {id : elem.id, name : elem.name, country : elem.country, coord : {lat : elem.coord.lat, lon : elem.coord.lon}}}));
+            if (!isGeoPos) props.recentSearchesHandler(newComp.map((elem) => { return { id: elem.id, name: elem.name, country: elem.country, coord: { lat: elem.coord.lat, lon: elem.coord.lon } } }));
         }
 
         if (queryString !== "Blockme") setLoading(false);
@@ -74,7 +74,11 @@ export default function SearchCard(props) {
                 <Row className='d-flex justify-content-center align-items-center h-100'>
                     <Col className='col-md-8 col-lg-6 col-xl-5'>
                         <Card className='w-100 h-100 p-2 position-static shadow-lg'
-                            style={{ "textShadow": "1px 2px 8px black", "backgroundRepeat": "no-repeat", "backgroundSize": "cover", "backgroundColor": "var(--bs-gray-600)", "backgroundImage": "url('https://media1.tenor.com/images/69420a9494909231ca2752a175839fec/tenor.gif')" }}
+                            style={{
+                                "textShadow": "1px 2px 8px black", "backgroundRepeat": "no-repeat",
+                                "backgroundSize": "cover", "backgroundColor": "var(--bs-gray-600)",
+                                "backgroundImage": "url('https://media1.tenor.com/images/69420a9494909231ca2752a175839fec/tenor.gif')"
+                            }}
                         >
                             <Card.Body className='position-static'>
                                 <Card.Title style={{ "fontFamily": "serif", "fontSize": "16pt" }} className="mb-4 pb-2 fw-normal text-white text-shadow">Check the weather forecast for&nbsp;&nbsp;
@@ -86,8 +90,10 @@ export default function SearchCard(props) {
                                                 <span className="input-group-text text-white bg-secondary h-100" id="basic-addon1"><Icons.Details /></span>
                                             </div>
                                             <Form.Control className='bg-dark text-white position-static' type='text' placeholder='City, CC' onChange={(e) => setSearch(wordProcess(e.target.value))} />
-                                            {!loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button>}
-                                            {loading && <Button disabled variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
+                                            <div className='position-static'>
+                                                {!loading && <Button variant='success' className='position-static' type='submit'><Icons.Weather />&nbsp;Forecast</Button>}
+                                                {loading && <Button disabled variant='secondary' className='position-static' type='submit'>Loading...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
+                                            </div>
                                         </div>
                                     </Form.Group>
 
@@ -108,13 +114,13 @@ export default function SearchCard(props) {
                                             </span>
                                             <span className='ms-auto'>
                                             </span>
-                                            <span className="">
+                                            <span>
                                                 <div className="form-check form-check-inline">
                                                     {loading && <Button disabled={true} variant='secondary' className='btn-sm'>...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
                                                     {!loading && <Button variant='secondary' className='btn-sm' value="Local" onClick={() => getCurrentGeoWeather(geoLocation)}><Icons.Map />&nbsp;Local</Button>}
                                                 </div>
                                             </span>
-                                            <span className="">
+                                            <span>
                                                 <div className="form-check form-check-inline">
                                                     <Button variant='primary' className='btn-sm'
                                                         value="Clear Cards" onClick={() => props.cardHandler()}><Icons.Clear />&nbsp;Clear Cards</Button>
