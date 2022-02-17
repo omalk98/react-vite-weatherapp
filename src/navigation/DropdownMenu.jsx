@@ -47,7 +47,7 @@ export default function CusDropdownMenu(props) {
         <div className='cus-dropdown' style={{ height: m_height }}>
             <CSSTransition in={m_active === 'main'} unmountOnExit timeout={500} classNames={`cus-menu-primary`} onEnter={calcHeight}>
                 <div className='cus-menu'>
-                    <CusDropdownItem leftIcon={<Icons.Globe />}>World Map</CusDropdownItem>
+                    <Link key={777777} to="/react-vite-weatherapp/map"><CusDropdownItem leftIcon={<Icons.Globe />}>World Map</CusDropdownItem></Link>
                     <CusDropdownItem leftIcon={<Icons.Eye />} rightIcon=">" goToMenu="settings">Recently Viewed Cities</CusDropdownItem>
                 </div>
             </CSSTransition>
