@@ -9,11 +9,9 @@ import paginateCards from '../helpers/paginate';
 export default function Home(props) {
     const [allCities, setAllCities] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [cities, setCities] = useState(null);
-    const [error, setError] = useState(false);
     const [tempFormat, setTempFormat] = useState("C");
 
-    useEffect(() => setCities(paginateCards(allCities, currentPage, tempFormat, pageControl, props.recentCitiesHandler)), [currentPage, allCities, tempFormat]);
+    useEffect(() => props.setCities(paginateCards(allCities, currentPage, tempFormat, pageControl, props.recentCitiesHandler)), [currentPage, allCities, tempFormat]);
 
     function pageControl(e) {
         switch (e.target.value) {
@@ -33,9 +31,9 @@ export default function Home(props) {
             <SearchCard
                 tempHandler={setTempFormat}
                 tempFormat={tempFormat}
-                errorHandler={setError}
-                cardHandler={setCities}
-                components={cities}
+                errorHandler={props.setError}
+                cardHandler={props.setCities}
+                components={props.cities}
                 currentPage={currentPage}
                 pageHandler={pageControl}
                 setCities={setAllCities}
@@ -44,7 +42,7 @@ export default function Home(props) {
                 recentSearchesHandler={props.recentSearchesHandler}
             />
 
-{cities && <Card className=' cus-resize-card m-auto mt-5 shadow-lg p-3 position-static'>
+{props.cities && <Card className=' cus-resize-card m-auto mt-5 shadow-lg p-3 position-static'>
                     <Card.Title style={{ "fontFamily": "Stencil Std, serif" }} className='text-black text-center'>Recently Searched Cities</Card.Title>
                     <Alert variant='dark' className='m-auto d-flex position-static' style={{ height: "2.8rem" }}>
                         <span className='d-flex w-100 position-static' style={{ marginTop: "-.7rem", fontFamily: "cursive, serif" }}>
@@ -85,11 +83,9 @@ export default function Home(props) {
                 }
 
             <WeatherCardPage
-                error={error}
-                cities={cities}
-            >
-                <br /><br />
-            </WeatherCardPage>
+                error={props.error}
+                cities={props.cities}
+            />
         </div>
     );
 }

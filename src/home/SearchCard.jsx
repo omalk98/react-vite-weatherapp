@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Form, Card, Row, Col, Button } from 'react-bootstrap'
 import _ from 'lodash'
 import fetchData from '../helpers/weatherData'
@@ -13,11 +13,13 @@ export default function SearchCard(props) {
     const [geoLocation, setGeoLocation] = useState();
     const [currentID, setCurrentID] = useState();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(async () => {
         if (!id || id === undefined) return;
         setCurrentID(id);
         await updateCards(id, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
+        navigate('/home/id/'+id);
     }, [id]);
 
     useEffect(async () => {

@@ -9,7 +9,7 @@ export default function WeatherCardPage(props) {
                     <Col className='col-md-8 col-lg-6 col-xl-5'>
                         {props.error && props.error}
                         <Alert className='text-center position-static' variant='success'><u><b>Last Updated:</b> {moment().format("hh:mm:ss a")}</u></Alert>
-                        {props.children}
+                        <br /><br />
                         {props.cities}
                     </Col>
                 </Row>
