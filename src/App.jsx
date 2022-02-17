@@ -6,6 +6,7 @@ import MapContainer from './map/Map'
 import NotFound from './NotFound'
 import Navigation from './navigation/Navigation'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { set } from 'lodash'
 
 function App() {
   const [recentCities, setRecentCities] = useState(localStorage.getItem("cities") ? JSON.parse(localStorage.getItem("cities")) : []);
@@ -15,15 +16,11 @@ function App() {
   const [geoLocation, setGeoLocation] = useState(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        if (!position) setGeoLocation({ coords: { latitude: 0, longitude: 0 } })
-        setGeoLocation(position);
+        if (position) setGeoLocation(position);
+        else setGeoLocation({ coords: { latitude: 0, longitude: 0 } });
       });
     }
   });
-
-  useEffect(()=>{
-    if(!geoLocation) setGeoLocation({coords : {latitude : 0, longitude : 0}});
-  },[geoLocation]);
 
   function dumpSearchHistory(cities) {
     if (!cities || cities === undefined) return;

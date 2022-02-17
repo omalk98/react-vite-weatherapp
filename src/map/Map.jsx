@@ -14,21 +14,22 @@ export default function MapContainer(props) {
 
     function updatePins() {
         let markerTags = [];
-        if (!props.position) {
-            setCenter({ lat: 0, lng: 0 });
-            return;
-        }
-        setCenter({ lat: props.position.coords.latitude, lng: props.position.coords.longitude });
         
-        if (props.position.coords.latitude && props.position.coords.longitude){
-            markerTags.push([<Marker
-                lat={props.position.coords.latitude}
-                lng={props.position.coords.longitude}
-                name={"Home::lat::" + props.position.coords.latitude + "::lon::" + props.position.coords.longitude}
-                color="orange"
-                key={7000}
-            />]);
+        if(props.position) {
+            setCenter({ lat: props.position.coords.latitude, lng: props.position.coords.longitude });
+
+            if (props.position.coords.latitude && props.position.coords.longitude){
+                markerTags.push([<Marker
+                    lat={props.position.coords.latitude}
+                    lng={props.position.coords.longitude}
+                    name={"Home::lat::" + props.position.coords.latitude + "::lon::" + props.position.coords.longitude}
+                    color="orange"
+                    key={7000}
+                />]);
+            }
         }
+        else setCenter({lat : 0, lng : 0});
+        
 
         if (props.locations)
             markerTags = [...markerTags, ...(genMarkers(props.locations, 'blue', 8000))];
