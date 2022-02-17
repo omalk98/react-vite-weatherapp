@@ -10,7 +10,6 @@ import * as Icons from '../helpers/icons'
 export default function SearchCard(props) {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
-    const [geoLocation, setGeoLocation] = useState();
     const [currentID, setCurrentID] = useState();
     const { id } = useParams();
     const navigate = useNavigate();
@@ -23,15 +22,11 @@ export default function SearchCard(props) {
     }, [id]);
 
     useEffect(async () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(getCurrentGeoWeather,
-                () => { props.errorHandler(<NotFound handler={props.errorHandler} text="Problem Getting Geolocation." />) });
-        }
-    }, [geoLocation]);
+        getCurrentGeoWeather(props.position);
+    }, [props.position]);
 
     async function getCurrentGeoWeather(position) {
         if (!position) return;
-        if (!geoLocation) setGeoLocation(position);
         if (id && id !== currentID) return;
         await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler, true);
     }
@@ -119,7 +114,7 @@ export default function SearchCard(props) {
                                             <span>
                                                 <div className="form-check form-check-inline">
                                                     {loading && <Button disabled={true} variant='secondary' className='btn-sm'>...&nbsp;<Icons.Cog className="Loading-data" /></Button>}
-                                                    {!loading && <Button variant='secondary' className='btn-sm' value="Local" onClick={() => getCurrentGeoWeather(geoLocation)}><Icons.Map />&nbsp;Local</Button>}
+                                                    {!loading && <Button variant='secondary' className='btn-sm' value="Local" onClick={() => getCurrentGeoWeather(props.position)}><Icons.Map />&nbsp;Local</Button>}
                                                 </div>
                                             </span>
                                             <span>

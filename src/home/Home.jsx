@@ -40,6 +40,7 @@ export default function Home(props) {
                 setPageNo={setCurrentPage}
                 recentCitiesHandler={props.recentCitiesHandler}
                 recentSearchesHandler={props.recentSearchesHandler}
+                position={props.position}
             />
 
 {props.cities && <Card className=' cus-resize-card m-auto mt-5 shadow-lg p-3 position-static'>
@@ -77,6 +78,7 @@ export default function Home(props) {
                         <MapContainer
                             searches={props.searches}
                             locations={props.locations}
+                            position={props.position}
                         />
                     </Card.Body>
                 </Card>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './home/Home'
 import WeatherCardPage from './home/WeatherCardPage'
@@ -12,6 +12,18 @@ function App() {
   const [recentSearches, setRecentSearch] = useState([]);
   const [cities, setCities] = useState(null);
   const [error, setError] = useState(false);
+  const [geoLocation, setGeoLocation] = useState(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        if (!position) setGeoLocation({ coords: { latitude: 0, longitude: 0 } })
+        setGeoLocation(position);
+      });
+    }
+  });
+
+  useEffect(()=>{
+    if(!geoLocation) setGeoLocation({coords : {latitude : 0, longitude : 0}});
+  },[geoLocation]);
 
   function dumpSearchHistory(cities) {
     if (!cities || cities === undefined) return;
@@ -45,6 +57,7 @@ function App() {
           setCities={setCities}
           error={error}
           setError={setError}
+          position={geoLocation}
         />} />
         <Route exact path="/home/:id" element={<Home
           recentSearchesHandler={setRecentSearch}
@@ -55,6 +68,7 @@ function App() {
           setCities={setCities}
           error={error}
           setError={setError}
+          position={geoLocation}
         />} />
         <Route exact path="/home/id/:id" element={
           <WeatherCardPage
@@ -64,6 +78,7 @@ function App() {
         <Route exact path="/map" element={<MapContainer
           searches={recentSearches}
           locations={recentCities}
+          position={geoLocation}
         />} />
         <Route path="*" element={<NotFound text='Page Not Found.' />} />
       </Routes>

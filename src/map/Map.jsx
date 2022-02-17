@@ -7,36 +7,35 @@ import { useLocation } from 'react-router-dom';
 
 export default function MapContainer(props) {
     const [markers, setMarkers] = useState([]);
-    const [center, setCenter] = useState(() => { updatePins() });
+    const [center, setCenter] = useState();
     const route = useLocation();
 
     useEffect(() => updatePins(), [props.locations, props.searches]);
 
     function updatePins() {
         let markerTags = [];
-        navigator.geolocation.getCurrentPosition((position) => {
-            if (!position) {
-                setCenter({ lat: 0, lng: 0 });
-                return;
-            }
-            setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+        if (!props.position) {
+            setCenter({ lat: 0, lng: 0 });
+            return;
+        }
+        setCenter({ lat: props.position.coords.latitude, lng: props.position.coords.longitude });
+
+        if (props.position.coords.latitude && props.position.coords.longitude)
             markerTags.push([<Marker
-                lat={position.coords.latitude}
-                lng={position.coords.longitude}
-                name={"Home::lat::" + position.coords.latitude + "::lon::" + position.coords.longitude}
+                lat={props.position.coords.latitude}
+                lng={props.position.coords.longitude}
+                name={"Home::lat::" + props.position.coords.latitude + "::lon::" + props.position.coords.longitude}
                 color="orange"
                 key={7000}
             />]);
 
-            if (props.locations) {
-                markerTags = [...markerTags, ...(genMarkers(props.locations, 'blue', 8000))];
-            }
+        if (props.locations)
+            markerTags = [...markerTags, ...(genMarkers(props.locations, 'blue', 8000))];
 
-            if (props.searches)
-                markerTags = [...markerTags, ...(genMarkers(props.searches, 'red', 9000))];
+        if (props.searches)
+            markerTags = [...markerTags, ...(genMarkers(props.searches, 'red', 9000))];
 
-            setMarkers(markerTags);
-        });
+        setMarkers(markerTags);
     }
 
     function genMarkers(details, color, keyset) {
@@ -61,7 +60,7 @@ export default function MapContainer(props) {
     };
 
     return (
-        <div className='m-auto' style={(route.pathname == "/map") ? {width : "98vw", height : "90vh"} : { height: '50vh', width: "auto"}}>
+        <div className='m-auto' style={(route.pathname == "/map") ? { width: "98vw", height: "90vh" } : { height: '50vh', width: "auto" }}>
             {center &&
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_API_KEY }}
