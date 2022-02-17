@@ -17,7 +17,7 @@ export default function CusDropdownMenu(props) {
         let i = 0;
         for (; i < cityDetails.length; ++i) {
             tags.push(
-                <Link key={500 + i} to={"/home/" + cityDetails[i].id}><CusDropdownItem leftIcon={<Icons.CityID />}
+                <Link key={500 + i} to={"/react-vite-weatherapp/home/" + cityDetails[i].id}><CusDropdownItem leftIcon={<Icons.CityID />}
                     rightIcon={<img className='ms-auto' style={{ "height": "1rem", "width": "auto" }}
                         src={"https://flagcdn.com/" + cityDetails[i].country.toLowerCase() + ".svg"} />}
                 >

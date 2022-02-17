@@ -16,8 +16,8 @@ export default function Navigation(props) {
     <div className="cus-nav-bar-main">
       <nav className="cus-navbar">
         <ul className="cus-navbar-nav">
-          <Link to="/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home />}></CusNavitem></Link>
-          <Link to="/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.World />}></CusNavitem></Link>
+          <Link to="/react-vite-weatherapp/home" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.Home />}></CusNavitem></Link>
+          <Link to="/react-vite-weatherapp/map" style={pushstyle} className="Color-spin"><CusNavitem icon={<Icons.World />}></CusNavitem></Link>
           <CusNavitem icon={<Icons.Caret />}>
             <CusDropdownMenu cityId={props.cityId} />
           </CusNavitem>

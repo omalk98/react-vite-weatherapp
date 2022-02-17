@@ -18,7 +18,7 @@ export default function SearchCard(props) {
         if (!id || id === undefined) return;
         setCurrentID(id);
         await updateCards(id, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler);
-        navigate('/home/id/'+id);
+        navigate('/react-vite-weatherapp/home/id/'+id);
     }, [id]);
 
     useEffect(async () => {

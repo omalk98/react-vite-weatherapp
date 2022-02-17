@@ -46,9 +46,9 @@ function App() {
     <BrowserRouter basepath="/react-vite-weatherapp">
       <Navigation style={{ zIndex: 1000000 }} cityId={recentCities} />
       <Routes style={{ zIndex: 0 }}>
-        <Route exact path="/react-vite-weatherapp" element={<Navigate to={"/home"} replace />} />
-        <Route exact path="/" element={<Navigate to={"/home"} replace />} />
-        <Route exact path="/home" element={<Home
+        <Route exact path="/" element={<Navigate to={"/react-vite-weatherapp/home"} replace />} />
+        <Route exact path="/react-vite-weatherapp" element={<Navigate to={"/react-vite-weatherapp/home"} replace />} />
+        <Route exact path="/react-vite-weatherapp/home" element={<Home
           recentSearchesHandler={setRecentSearch}
           recentCitiesHandler={dumpSearchHistory}
           searches={recentSearches}
@@ -59,7 +59,7 @@ function App() {
           setError={setError}
           position={geoLocation}
         />} />
-        <Route exact path="/home/:id" element={<Home
+        <Route exact path="/react-vite-weatherapp/home/:id" element={<Home
           recentSearchesHandler={setRecentSearch}
           recentCitiesHandler={dumpSearchHistory}
           searches={recentSearches}
@@ -70,12 +70,12 @@ function App() {
           setError={setError}
           position={geoLocation}
         />} />
-        <Route exact path="/home/id/:id" element={
+        <Route exact path="/react-vite-weatherapp/home/id/:id" element={
           <WeatherCardPage
             error={error}
             cities={cities}
           />} />
-        <Route exact path="/map" element={<MapContainer
+        <Route exact path="/react-vite-weatherapp/map" element={<MapContainer
           searches={recentSearches}
           locations={recentCities}
           position={geoLocation}
