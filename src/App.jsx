@@ -13,7 +13,7 @@ function App() {
   const [cities, setCities] = useState(null);
   const [error, setError] = useState(false);
   const [geoLocation, setGeoLocation] = useState(() => {
-    if (navigator.geolocation) {
+    if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         if (position) setGeoLocation(position);
         else
