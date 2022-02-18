@@ -14,23 +14,22 @@ export default function MapContainer(props) {
 
     function updatePins() {
         let markerTags = [];
-        
-        if(props.position) {
+        if(props.position && !center) {
             setCenter({ lat: props.position.coords.latitude, lng: props.position.coords.longitude });
-
-            if (props.position.coords.latitude && props.position.coords.longitude){
-                markerTags.push([<Marker
-                    lat={props.position.coords.latitude}
-                    lng={props.position.coords.longitude}
-                    name={"Home::lat::" + props.position.coords.latitude + "::lon::" + props.position.coords.longitude}
-                    color="orange"
-                    key={7000}
-                />]);
-            }
         }
+        else if (props.searches && props.searches.length) setCenter({lat : props.searches[0].coord.lat, lng : props.searches[0].coord.lon});
+        else if (props.locations && props.locations.length) setCenter({lat : props.locations[0].coord.lat, lng : props.locations[0].coord.lon});
         else setCenter({lat : 0, lng : 0});
         
-
+        if (props.position && props.position.coords.latitude && props.position.coords.longitude){
+            markerTags.push([<Marker
+                lat={props.position.coords.latitude}
+                lng={props.position.coords.longitude}
+                name={"Home::lat::" + props.position.coords.latitude + "::lon::" + props.position.coords.longitude}
+                color="orange"
+                key={7000}
+            />]);
+        }
         if (props.locations)
             markerTags = [...markerTags, ...(genMarkers(props.locations, 'blue', 8000))];
 
@@ -66,9 +65,10 @@ export default function MapContainer(props) {
             {center &&
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_API_KEY }}
-                    defaultCenter={center}
+                    defaultCenter={{lat : 0, lng : 0}}
                     defaultZoom={0}
                     options={getMapOptions}
+                    center={center}
                 >
                     {markers}
 

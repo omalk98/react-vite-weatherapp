@@ -26,7 +26,10 @@ export default function SearchCard(props) {
     }, [props.position]);
 
     async function getCurrentGeoWeather(position) {
-        if (!position) return;
+        if (!position){
+            props.errorHandler(<NotFound handler={props.errorHandler} text="Enable GeoLocation and Reload the Page to get Weather for your current area." />);
+            return;
+        } 
         if (id && id !== currentID) return;
         await updateCards(`&lat=${position.coords.latitude}&lon=${position.coords.longitude}&cnt=1`, props.currentPage, props.tempFormat, props.pageHandler, props.recentCitiesHandler, true);
     }
