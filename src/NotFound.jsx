@@ -1,11 +1,4 @@
-import { useNavigate } from 'react-router-dom';
 import { Alert, Container } from 'react-bootstrap'
-
-
-const routeChange = () => {
-  let path = `newPath`;
-  navigate(path);
-}
 
 export default function NotFound(props) {
   function removeError(e) {
