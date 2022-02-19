@@ -39,7 +39,7 @@ export default function CityCard(props) {
                                         <tr><td>Max <Icons.HighTemp /> <strong>{(props.tempFormat === "C") ? props.city.temp.max : toFahrenheit(props.city.temp.max)}°{props.tempFormat} </strong></td>
                                             <td>Min <Icons.LowTemp /> <strong>{(props.tempFormat === "C") ? props.city.temp.min : toFahrenheit(props.city.temp.min)}°{props.tempFormat}</strong></td></tr>
                                         <tr><td colSpan={2}><hr className='text-black' /></td></tr>
-                                        <tr><td><strong><Icons.Clouds /> {props.city.clouds}% </strong></td><td><strong><Icons.Wind /> {(props.tempFormat === "C") ? props.city.wind + " | m/s" : (Number(props.city.wind) * 2.24).toFixed(2) + " | mi/h"}</strong></td></tr>
+                                        <tr><td><strong><Icons.Clouds /> {props.city.clouds}% </strong></td><td><strong><Icons.Wind /> {(props.tempFormat === "C") ? props.city.wind.speed + " | m/s" : (Number(props.city.wind) * 2.24).toFixed(2) + " | mi/h"} | { props.city.wind.direction }</strong></td></tr>
                                         <tr><td><strong><Icons.Humidity /> {props.city.humidity}% </strong></td><td><strong> <Icons.Pressure /> {props.city.pressure} hPa</strong></td></tr>
                                         <tr><td colSpan={2}><hr className='text-black' /></td></tr>
                                         <tr><td>Sunrise <strong><Icons.SunRise /><br/> {props.city.sun.rise}</strong></td><td> Sunset <strong><Icons.SunSet /><br/> {props.city.sun.set}</strong></td></tr>
