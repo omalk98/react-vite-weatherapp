@@ -56,7 +56,7 @@ export default function MapContainer(props) {
             disableDefaultUI: true,
             mapTypeControl: true,
             streetViewControl: true,
-            styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'on' }] }],
+            styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'on' }] }]
         };
     };
 
@@ -69,6 +69,7 @@ export default function MapContainer(props) {
                     defaultZoom={0}
                     options={getMapOptions}
                     center={center}
+                    layerTypes={["TrafficLayer", "TransitLayer"]}
                 >
                     {markers}
 

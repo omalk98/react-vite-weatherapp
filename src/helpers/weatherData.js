@@ -58,7 +58,7 @@ function parseXML(XMLdata) {
         pressure:       XMLdata.getElementsByTagName("pressure")[0].getAttribute("value"),
         humidity:       XMLdata.getElementsByTagName("humidity")[0].getAttribute("value"),
         clouds:         XMLdata.getElementsByTagName("clouds")[0].getAttribute("value"),
-        wind:           {
+        wind: {
             speed:      XMLdata.getElementsByTagName("speed")[0].getAttribute("value"),
             direction : XMLdata.getElementsByTagName("direction")[0].getAttribute("code")
         },
