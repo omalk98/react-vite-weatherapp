@@ -47,7 +47,7 @@ function parseXML(XMLdata) {
         name:           XMLdata.getElementsByTagName("city")[0].getAttribute("name"),
         country:        XMLdata.getElementsByTagName("country")[0].innerHTML,
         flag:           `https://flagcdn.com/${XMLdata.getElementsByTagName("country")[0].innerHTML.toLowerCase()}.svg`,
-        icon:           `http://openweathermap.org/img/wn/${XMLdata.getElementsByTagName("weather")[0].getAttribute("icon")}@2x.png`,
+        icon:           `https://openweathermap.org/img/wn/${XMLdata.getElementsByTagName("weather")[0].getAttribute("icon")}@2x.png`,
         desc:           XMLdata.getElementsByTagName("weather")[0].getAttribute("value"),
         temp: {
             value:      Number(XMLdata.getElementsByTagName("temperature")[0].getAttribute("value")),
