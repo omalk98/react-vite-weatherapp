@@ -61,7 +61,7 @@ export default function MapContainer(props) {
     };
 
     return (
-        <div className='m-auto' style={(route.pathname == "/react-vite-weatherapp/map") ? { width: "98vw", height: "90vh" } : { height: '50vh', width: "auto" }}>
+        <div className='m-auto' style={(route.pathname == "/map") ? { width: "98vw", height: "90vh" } : { height: '50vh', width: "auto" }}>
             {center &&
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_API_KEY }}

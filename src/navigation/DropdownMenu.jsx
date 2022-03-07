@@ -17,7 +17,7 @@ export default function CusDropdownMenu(props) {
         let i = 0;
         for (; i < cityDetails.length; ++i) {
             tags.push(
-                <Link key={500 + i} to={"/react-vite-weatherapp/home/" + cityDetails[i].id}><CusDropdownItem leftIcon={<Icons.CityID />}
+                <Link key={500 + i} to={"/home/" + cityDetails[i].id}><CusDropdownItem leftIcon={<Icons.CityID />}
                     rightIcon={<img className='ms-auto' style={{ "height": "1rem", "width": "auto" }}
                         src={"https://flagcdn.com/" + cityDetails[i].country.toLowerCase() + ".svg"} />}
                 >
@@ -47,7 +47,7 @@ export default function CusDropdownMenu(props) {
         <div className='cus-dropdown' style={{ height: m_height }}>
             <CSSTransition in={m_active === 'main'} unmountOnExit timeout={500} classNames={`cus-menu-primary`} onEnter={calcHeight}>
                 <div className='cus-menu'>
-                    <Link key={777777} to="/react-vite-weatherapp/map"><CusDropdownItem leftIcon={<Icons.Globe />}>World Map</CusDropdownItem></Link>
+                    <Link key={777777} to="/map"><CusDropdownItem leftIcon={<Icons.Globe />}>World Map</CusDropdownItem></Link>
                     <CusDropdownItem leftIcon={<Icons.Eye />} rightIcon=">" goToMenu="settings">Recently Viewed Cities</CusDropdownItem>
                 </div>
             </CSSTransition>

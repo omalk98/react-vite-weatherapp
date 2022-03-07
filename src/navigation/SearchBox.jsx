@@ -9,7 +9,7 @@ export default function CusSearchBox() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        navigate('/react-vite-weatherapp/home/' + search)
+        navigate('/home/' + search)
     }
 
     return (
